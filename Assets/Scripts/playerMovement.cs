@@ -1,16 +1,41 @@
 using UnityEngine;
-
+using System.Collections;
+using UnityEngine.InputSystem;
 public class playerMovement : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float speed = 100f; // Movement speed
+    public float jumpForce = 5f; // Jump force
+    private Rigidbody rb; // Reference to Rigidbody component
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>(); // Initialize Rigidbody
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        // Get input for horizontal and vertical movement
+        float moveX = Input.GetAxis("Horizontal");
+        float moveZ = Input.GetAxis("Vertical");
+
+        // Calculate movement direction
+        Vector3 move = transform.right * moveX + transform.forward * moveZ;
+
+        // Apply movement
+        rb.MovePosition(transform.position + move * speed * Time.deltaTime);
+    }
+
+    bool IsGrounded()
+    {
+        // Check if the player is on the ground
+        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+    }
+
+    void OnJump()
+    {
+        if (IsGrounded())
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 }
