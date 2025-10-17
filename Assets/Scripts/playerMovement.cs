@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class playerMovement : MonoBehaviour
 {
     public float speed = 100f; // Movement speed
-    public float mouseSensitivity = 2f; // Camera sensitiv
+    public float mouseSensitivity = 2f; // Camera sensitivity
     public float jumpForce = 5f; // Jump force
 
     private Rigidbody rb; // Reference to Rigidbody component
