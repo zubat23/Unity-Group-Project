@@ -3,12 +3,14 @@ using System.Collections;
 using UnityEngine.InputSystem;
 public class playerMovement : MonoBehaviour
 {
-    public float speed = 100f; // Movement speed
+    public float speed = 40f; // Movement speed
     public float mouseSensitivity = 2f; // Camera sensitivity
     public float jumpForce = 5f; // Jump force
 
     private Rigidbody rb; // Reference to Rigidbody component
     private Transform cameraTransform; //For 1st person camera
+
+    public Animator PlayerAnimator; //All player Animations
 
     void Start()
     {
@@ -30,8 +32,27 @@ public class playerMovement : MonoBehaviour
         // Apply movement
         rb.MovePosition(transform.position + move * speed * Time.deltaTime);
 
-        //Camera movement
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        //Animation
+        if(moveX > 0 || moveZ > 0)
+        {
+            PlayerAnimator.SetBool("IsWalking", true);
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsWalking", false);
+        }
+
+        if (IsGrounded())
+        {
+            PlayerAnimator.SetBool("IsFalling", false);
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsFalling", true);
+        }
+
+            //Camera movement
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
         transform.Rotate(Vector3.up * mouseX);
@@ -50,5 +71,7 @@ public class playerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+
+        
     }
 }
