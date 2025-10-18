@@ -14,7 +14,7 @@ public class playerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>(); // Initialize Rigidbody
         cameraTransform = Camera.main.transform;
-        cameraTransform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
+        cameraTransform.position = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z + .3f);
         cameraTransform.parent = transform; // Attach camera to player
     }
 
