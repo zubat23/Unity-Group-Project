@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 public class playerMovement : MonoBehaviour
 {
     public float speed = 100f; // Movement speed
@@ -26,7 +27,6 @@ public class playerMovement : MonoBehaviour
 
         // Apply movement
         rb.MovePosition(transform.position + move * speed * Time.deltaTime);
-
     }
 
     bool IsGrounded()
