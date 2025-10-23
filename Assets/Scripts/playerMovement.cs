@@ -1,12 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 public class playerMovement : MonoBehaviour
 {
     public float speed = 100f; // Movement speed
     public float mouseSensitivity = 2f; // Camera sensitivity
     public float jumpForce = 5f; // Jump force
 
+    private float Yrotation = 0;
     private Rigidbody rb; // Reference to Rigidbody component
     private Transform cameraTransform; //For 1st person camera
 
@@ -34,8 +36,11 @@ public class playerMovement : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
+        Yrotation -= mouseY;
+        Yrotation = Mathf.Clamp(Yrotation, -90.0f, 90.0f);
+
         transform.Rotate(Vector3.up * mouseX);
-        cameraTransform.Rotate(Vector3.left * mouseY);
+        transform.localRotation = Quaternion.Euler(Yrotation,0,0);
     }
 
     bool IsGrounded()
