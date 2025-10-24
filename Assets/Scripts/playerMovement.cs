@@ -12,11 +12,13 @@ public class playerMovement : MonoBehaviour
     Rigidbody rb;
     CharacterController Controller; // Reference to Rigidbody component
 
+    public Animator PlayerAnimator; //All player Animations
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         Controller = GetComponent<CharacterController>(); // Initialize Rigidbody
+        rb = GetComponent<Rigidbody>(); // Initialize Rigidbody
+        PlayerAnimator = GetComponent<Animator>();//Animator
     }
 
     void Update()
@@ -45,11 +47,69 @@ public class playerMovement : MonoBehaviour
         // Calculate movement direction
         move.y += gravity * Time.deltaTime;
         Controller.Move(move * speed * Time.deltaTime);
+        // Apply movement
+        rb.MovePosition(transform.position + move * speed * Time.deltaTime);
+
+        //Player Animation
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            PlayerAnimator.SetBool("IsRunFoward", true);
+            Debug.Log("y");
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsRunFoward", false);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            PlayerAnimator.SetBool("IsRunBack", true);
+            Debug.Log("y");
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsRunBack", false);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            PlayerAnimator.SetBool("IsRunLeft", true);
+            Debug.Log("y");
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsRunLeft", false);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            PlayerAnimator.SetBool("IsRunRight", true);
+            Debug.Log("y");
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsRunRight", false);
+        }
+
     }
 
     bool IsGrounded()
     {
         // Check if the player is on the ground
         return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+    }
+
+    void OnJump()
+    {
+        if (IsGrounded())
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            PlayerAnimator.SetBool("IsFalling", false);
+        }
+        else 
+        {
+
+            PlayerAnimator.SetBool("IsFalling", true);
+        }
+
+        
     }
 }
