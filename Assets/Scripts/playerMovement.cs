@@ -12,7 +12,6 @@ public class playerMovement : MonoBehaviour
     private float Yrotation = 0;
     private Rigidbody rb; // Reference to Rigidbody component
 
-
     public Animator PlayerAnimator; //All player Animations
 
     void Start()
@@ -31,6 +30,18 @@ public class playerMovement : MonoBehaviour
 
         // Apply movement
         rb.MovePosition(transform.position + move * speed * Time.deltaTime);
+
+        //Player Animation
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            PlayerAnimator.SetBool("PlayerAnimator", true);
+            Debug.Log("y");
+        }
+        else
+        {
+            PlayerAnimator.SetBool("PlayerAnimator", false);
+        }
 
     }
 
