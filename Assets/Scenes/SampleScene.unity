@@ -207,7 +207,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.44315, y: 4.7, z: -9.35}
+  m_LocalPosition: {x: 0, y: 3.14, z: -5.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -269,9 +269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36da0631f54ca0341881d2b2b3943197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 100
-  body: {fileID: 1152852929}
-  head: {fileID: 330585546}
+  distance: 10
+  sensitivity: 200
+  lookAt: {fileID: 1152852929}
+  Player: {fileID: 1152852929}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +458,7 @@ GameObject:
   - component: {fileID: 1152852925}
   - component: {fileID: 1152852930}
   - component: {fileID: 1152852932}
-  - component: {fileID: 1152852934}
+  - component: {fileID: 1152852933}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -597,9 +598,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9463c82a5128fe4bbbefb64d4c08864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 40
-  jumpForce: 4
-  PlayerAnimator: {fileID: 1152852934}
+  speed: 10
+  jumpForce: 30
+  cam: {fileID: 330585546}
 --- !u!114 &1152852932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,6 +631,8 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!143 &1152852933
+CharacterController:
 --- !u!95 &1152852934
 Animator:
   serializedVersion: 7
@@ -638,6 +641,24 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1152852924}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
   m_Controller: {fileID: 9100000, guid: 4c7fe8e1a3919c549a79a706afefd1ce, type: 2}

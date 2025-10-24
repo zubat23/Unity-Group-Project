@@ -4,18 +4,19 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 public class playerMovement : MonoBehaviour
 {
+    public float speed = 10f; // Movement speed
+    public float jumpForce = 10f; // Jump force
+    public Transform cam;
 
-    public float speed = 100f; // Movement speed
-
-    public float jumpForce = 5f; // Jump force
-
-    private float Yrotation = 0;
-    private Rigidbody rb; // Reference to Rigidbody component
+    private float gravity = -20.0f;
+    Rigidbody rb;
+    CharacterController Controller; // Reference to Rigidbody component
 
     public Animator PlayerAnimator; //All player Animations
 
     void Start()
     {
+        Controller = GetComponent<CharacterController>(); // Initialize Rigidbody
         rb = GetComponent<Rigidbody>(); // Initialize Rigidbody
         PlayerAnimator = GetComponent<Animator>();//Animator
     }
@@ -29,6 +30,23 @@ public class playerMovement : MonoBehaviour
         // Calculate movement direction
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
 
+        if (move.magnitude != 0)
+        {
+            transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * cam.GetComponent<CameraController>().sensitivity * Time.deltaTime);
+
+            Quaternion CamRotation = cam.rotation;
+            CamRotation.x = 0f;
+            CamRotation.z = 0f;
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, CamRotation, 0.1f);
+
+
+        }
+
+
+        // Calculate movement direction
+        move.y += gravity * Time.deltaTime;
+        Controller.Move(move * speed * Time.deltaTime);
         // Apply movement
         rb.MovePosition(transform.position + move * speed * Time.deltaTime);
 
