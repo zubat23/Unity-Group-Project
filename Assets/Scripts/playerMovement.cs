@@ -17,6 +17,7 @@ public class playerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>(); // Initialize Rigidbody
+        PlayerAnimator = GetComponent<Animator>();//Animator
     }
 
     void Update()
@@ -33,14 +34,41 @@ public class playerMovement : MonoBehaviour
 
         //Player Animation
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
-            PlayerAnimator.SetBool("PlayerAnimator", true);
+            PlayerAnimator.SetBool("IsRunFoward", true);
             Debug.Log("y");
         }
         else
         {
-            PlayerAnimator.SetBool("PlayerAnimator", false);
+            PlayerAnimator.SetBool("IsRunFoward", false);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            PlayerAnimator.SetBool("IsRunBack", true);
+            Debug.Log("y");
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsRunBack", false);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            PlayerAnimator.SetBool("IsRunLeft", true);
+            Debug.Log("y");
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsRunLeft", false);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            PlayerAnimator.SetBool("IsRunRight", true);
+            Debug.Log("y");
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsRunRight", false);
         }
 
     }
@@ -56,6 +84,12 @@ public class playerMovement : MonoBehaviour
         if (IsGrounded())
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            PlayerAnimator.SetBool("IsFalling", false);
+        }
+        else 
+        {
+
+            PlayerAnimator.SetBool("IsFalling", true);
         }
 
         
