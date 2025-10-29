@@ -455,10 +455,10 @@ GameObject:
   - component: {fileID: 1152852928}
   - component: {fileID: 1152852927}
   - component: {fileID: 1152852926}
-  - component: {fileID: 1152852925}
   - component: {fileID: 1152852930}
   - component: {fileID: 1152852932}
   - component: {fileID: 1152852933}
+  - component: {fileID: 1152852934}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -466,33 +466,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &1152852925
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1152852924}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!136 &1152852926
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -601,6 +574,7 @@ MonoBehaviour:
   speed: 10
   jumpForce: 30
   cam: {fileID: 330585546}
+  PlayerAnimator: {fileID: 0}
 --- !u!114 &1152852932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,9 +607,6 @@ MonoBehaviour:
   m_Camera: {fileID: 0}
 --- !u!143 &1152852933
 CharacterController:
---- !u!95 &1152852934
-Animator:
-  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -653,12 +624,20 @@ Animator:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &1152852934
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152852924}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
   m_Controller: {fileID: 9100000, guid: 4c7fe8e1a3919c549a79a706afefd1ce, type: 2}
