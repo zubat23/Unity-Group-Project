@@ -76,6 +76,14 @@ public class playerMovement : MonoBehaviour
         {
             PlayerAnimator.SetBool("IsRunRight", false);
         }
+        if (IsGrounded())
+        {
+            PlayerAnimator.SetBool("IsFalling", false);
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsFalling", true);
+        }
 
     }
 
@@ -85,18 +93,19 @@ public class playerMovement : MonoBehaviour
         return Physics.Raycast(transform.position, Vector3.down, 1.1f);
     }
 
+    IEnumerator jumping()
+    {
+        gravity = 20.0f;
+        yield return new WaitForSeconds(1.0f);
+        gravity = -80.0f;
+    }
+
     void OnJump()
     {
         if (IsGrounded())
         {
-            PlayerAnimator.SetBool("IsFalling", false);
-        }
-        else 
-        {
-
-            PlayerAnimator.SetBool("IsFalling", true);
+            StartCoroutine(jumping());
         }
 
-        
     }
 }
