@@ -6,7 +6,8 @@ using UnityEngine.Rendering;
 public class playerMovement : MonoBehaviour
 {
     public float speed = 10f; // Movement speed
-    public float jumpForce = 10f; // Jump force
+    public float jumpForce = 80f; // Jump force
+    public float health = 3;
     public Transform cam;
 
     private float MouseX;
@@ -95,7 +96,7 @@ public class playerMovement : MonoBehaviour
 
     IEnumerator jumping()
     {
-        gravity = 40.0f;
+        gravity = jumpForce;
         yield return new WaitForSeconds(1.0f);
         gravity = -80.0f;
         
