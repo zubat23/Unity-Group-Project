@@ -11,13 +11,13 @@ public class playerMovement : MonoBehaviour
 
     private float MouseX;
     private float gravity = -80.0f;
-    CharacterController Controller; // Reference to Rigidbody component
+    CharacterController Controller; // Reference to Character Controller component
 
     public Animator PlayerAnimator; //All player Animations
 
     void Start()
     {
-        Controller = GetComponent<CharacterController>(); // Initialize Rigidbody
+        Controller = GetComponent<CharacterController>(); // Initialize Controller
         PlayerAnimator = GetComponent<Animator>();//Animator
     }
 
@@ -76,7 +76,15 @@ public class playerMovement : MonoBehaviour
         {
             PlayerAnimator.SetBool("IsRunRight", false);
         }
-
+        if (IsGrounded())
+        {
+            PlayerAnimator.SetBool("IsFalling", false);
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsFalling", true);
+            gravity -= 4 * Time.deltaTime;
+        }
     }
 
     bool IsGrounded()
@@ -85,18 +93,18 @@ public class playerMovement : MonoBehaviour
         return Physics.Raycast(transform.position, Vector3.down, 1.1f);
     }
 
+    IEnumerator jumping()
+    {
+        gravity = 40.0f;
+        yield return new WaitForSeconds(1.0f);
+        gravity = -80.0f;
+        
+    }
     void OnJump()
     {
         if (IsGrounded())
         {
-            PlayerAnimator.SetBool("IsFalling", false);
+            StartCoroutine(jumping());
         }
-        else 
-        {
-
-            PlayerAnimator.SetBool("IsFalling", true);
-        }
-
-        
     }
 }
