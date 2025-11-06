@@ -90,7 +90,6 @@ public class playerMovement : MonoBehaviour
         else
         {
             PlayerAnimator.SetBool("IsFalling", true);
-            gravity -= 4 * Time.deltaTime;
         }
         Debug.Log(health);
     }
@@ -103,10 +102,9 @@ public class playerMovement : MonoBehaviour
 
     IEnumerator jumping()
     {
-        gravity = jumpForce;
+        gravity = 20.0f;
         yield return new WaitForSeconds(1.0f);
         gravity = -80.0f;
-        
     }
 
     IEnumerator Knockback()
