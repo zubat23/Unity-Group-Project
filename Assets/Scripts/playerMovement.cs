@@ -10,6 +10,8 @@ public class playerMovement : MonoBehaviour
     public float health = 3;
     public Transform cam;
 
+    private bool knockback = false;
+    private bool iFrames = false;
     private float MouseX;
     private float gravity = -80.0f;
     CharacterController Controller; // Reference to Character Controller component
@@ -40,6 +42,10 @@ public class playerMovement : MonoBehaviour
 
 
         // Calculate movement direction
+        if (knockback)
+        {
+            move.x = -2.5f;
+        }
         move.y += gravity * Time.deltaTime;
         Controller.Move(move * speed * Time.deltaTime);
 
@@ -86,6 +92,7 @@ public class playerMovement : MonoBehaviour
             PlayerAnimator.SetBool("IsFalling", true);
             gravity -= 4 * Time.deltaTime;
         }
+        Debug.Log(health);
     }
 
     bool IsGrounded()
@@ -101,11 +108,34 @@ public class playerMovement : MonoBehaviour
         gravity = -80.0f;
         
     }
+
+    IEnumerator Knockback()
+    {
+        knockback = true;
+        iFrames = true;
+        yield return new WaitForSeconds(0.5f);
+        knockback = false;
+        iFrames = false;
+    }
+
     void OnJump()
     {
         if (IsGrounded())
         {
             StartCoroutine(jumping());
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("BearAttack") && !iFrames)
+        {
+            health--;
+            if (health == 0)
+            {
+                Destroy(gameObject);
+            }
+            StartCoroutine(Knockback());
         }
     }
 }

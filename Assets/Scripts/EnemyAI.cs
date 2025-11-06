@@ -18,18 +18,21 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(rb.transform.position, player.transform.position);
-        updateAggression(distance);
+        if (player != null)
+        {
+            float distance = Vector3.Distance(rb.transform.position, player.transform.position);
+            updateAggression(distance);
 
-        if (player != null && aggressive)
-        {
-            rb.transform.position = Vector3.MoveTowards(rb.transform.position, player.transform.position, speed * Time.deltaTime);
-            transform.LookAt(player.transform);
-        }
-        else if (!atStartPoint)
-        {
-            rb.transform.position = Vector3.MoveTowards(rb.transform.position, inactiveTarget.transform.position, speed * Time.deltaTime);
-            transform.LookAt(inactiveTarget.transform);
+            if (aggressive)
+            {
+                rb.transform.position = Vector3.MoveTowards(rb.transform.position, player.transform.position, speed * Time.deltaTime);
+                transform.LookAt(player.transform);
+            }
+            else if (!atStartPoint)
+            {
+                rb.transform.position = Vector3.MoveTowards(rb.transform.position, inactiveTarget.transform.position, speed * Time.deltaTime);
+                transform.LookAt(inactiveTarget.transform);
+            }
         }
     }
     private void OnTriggerEnter(Collider other)
