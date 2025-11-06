@@ -11,13 +11,13 @@ public class playerMovement : MonoBehaviour
 
     private float MouseX;
     private float gravity = -80.0f;
-    CharacterController Controller; // Reference to Rigidbody component
+    CharacterController Controller; // Reference to Character Controller component
 
     public Animator PlayerAnimator; //All player Animations
 
     void Start()
     {
-        Controller = GetComponent<CharacterController>(); // Initialize Rigidbody
+        Controller = GetComponent<CharacterController>(); // Initialize Controller
         PlayerAnimator = GetComponent<Animator>();//Animator
     }
 
@@ -84,6 +84,7 @@ public class playerMovement : MonoBehaviour
         {
             PlayerAnimator.SetBool("IsFalling", true);
         }
+        
 
     }
 
@@ -106,6 +107,5 @@ public class playerMovement : MonoBehaviour
         {
             StartCoroutine(jumping());
         }
-
     }
 }
