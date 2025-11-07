@@ -3,11 +3,14 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
+using TMPro;
 public class playerMovement : MonoBehaviour
 {
     public float speed = 10f; // Movement speed
     public float health = 3;
     public Transform cam;
+    public TextMeshProUGUI healthText; // Handles health UI
 
     private bool knockback = false;
     private bool iFrames = false;  //Handles taking damage
@@ -22,7 +25,7 @@ public class playerMovement : MonoBehaviour
     void Start()
     {
         Controller = GetComponent<CharacterController>(); // Initialize Controller
-        PlayerAnimator = GetComponent<Animator>();//Animator
+        PlayerAnimator = GetComponent<Animator>();//Initialize Animator
     }
 
     void Update()
@@ -92,15 +95,15 @@ public class playerMovement : MonoBehaviour
         {
             PlayerAnimator.SetBool("IsFalling", true);
         }
-        Debug.Log(gravity);
 
         if (!IsGrounded() && !isJumping)
         {
             gravity -= 1;
         }
-        //else if (IsGrounded()) {
-            //gravity = -100.0f;
-       // }
+        else if (IsGrounded())
+        {
+            gravity = -100.0f;
+        }
     }
 
     bool IsGrounded()
@@ -109,7 +112,7 @@ public class playerMovement : MonoBehaviour
         return Physics.Raycast(transform.position, Vector3.down, 1.3f);
     }
 
-    IEnumerator jumping()
+    IEnumerator jumping()  // Is called when player presses space whilst on the ground.
     {
         gravity = 40.0f;
         isJumping = true;
@@ -118,7 +121,7 @@ public class playerMovement : MonoBehaviour
         isJumping = false;
     }
 
-    IEnumerator Knockback()
+    IEnumerator Knockback()  // Knocks the player backward and provides temporary invulnerability after they get hit.
     {
         knockback = true;
         iFrames = true;
@@ -139,7 +142,9 @@ public class playerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("BearAttack") && !iFrames)
         {
+
             health--;
+            healthText.text = "Health: " + health.ToString();
             if (health == 0)
             {
                 Destroy(gameObject);
