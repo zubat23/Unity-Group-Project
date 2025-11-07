@@ -98,7 +98,7 @@ public class playerMovement : MonoBehaviour
 
         if (!IsGrounded() && !isJumping)
         {
-            gravity -= 1;
+            gravity -= 3 * Time.deltaTime;
         }
         else if (IsGrounded())
         {
@@ -151,5 +151,5 @@ public class playerMovement : MonoBehaviour
             }
             StartCoroutine(Knockback());
         }
-    }
+    } 
 }
