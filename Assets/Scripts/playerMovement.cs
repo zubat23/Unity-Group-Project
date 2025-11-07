@@ -6,14 +6,15 @@ using UnityEngine.Rendering;
 public class playerMovement : MonoBehaviour
 {
     public float speed = 10f; // Movement speed
-    public float jumpForce = 80f; // Jump force
     public float health = 3;
     public Transform cam;
 
     private bool knockback = false;
-    private bool iFrames = false;
+    private bool iFrames = false;  //Handles taking damage
+
+    private bool isJumping = false;
     private float MouseX;
-    private float gravity = -80.0f;
+    private float gravity = -100.0f;
     CharacterController Controller; // Reference to Character Controller component
 
     public Animator PlayerAnimator; //All player Animations
@@ -91,20 +92,30 @@ public class playerMovement : MonoBehaviour
         {
             PlayerAnimator.SetBool("IsFalling", true);
         }
-        Debug.Log(health);
+        Debug.Log(gravity);
+
+        if (!IsGrounded() && !isJumping)
+        {
+            gravity -= 1;
+        }
+        //else if (IsGrounded()) {
+            //gravity = -100.0f;
+       // }
     }
 
     bool IsGrounded()
     {
         // Check if the player is on the ground
-        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+        return Physics.Raycast(transform.position, Vector3.down, 1.3f);
     }
 
     IEnumerator jumping()
     {
-        gravity = 20.0f;
+        gravity = 40.0f;
+        isJumping = true;
         yield return new WaitForSeconds(1.0f);
-        gravity = -80.0f;
+        gravity = -100.0f;
+        isJumping = false;
     }
 
     IEnumerator Knockback()
