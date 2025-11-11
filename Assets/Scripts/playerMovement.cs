@@ -3,17 +3,22 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 public class playerMovement : MonoBehaviour
 {
     public float speed = 10f; // Movement speed
-    public float jumpForce = 80f; // Jump force
     public float health = 3;
     public Transform cam;
+    public TextMeshProUGUI healthText; // Handles health UI
 
     private bool knockback = false;
-    private bool iFrames = false;
+    private bool iFrames = false;  //Handles taking damage
+
+    private bool isJumping = false;
     private float MouseX;
-    private float gravity = -80.0f;
+    private float gravity = -100.0f;
     CharacterController Controller; // Reference to Character Controller component
 
     public Animator PlayerAnimator; //All player Animations
@@ -21,7 +26,7 @@ public class playerMovement : MonoBehaviour
     void Start()
     {
         Controller = GetComponent<CharacterController>(); // Initialize Controller
-        PlayerAnimator = GetComponent<Animator>();//Animator
+        PlayerAnimator = GetComponent<Animator>();//Initialize Animator
     }
 
     void Update()
@@ -91,23 +96,33 @@ public class playerMovement : MonoBehaviour
         {
             PlayerAnimator.SetBool("IsFalling", true);
         }
-        Debug.Log(health);
+
+        if (!IsGrounded() && !isJumping)
+        {
+            gravity -= 3 * Time.deltaTime;
+        }
+        else if (IsGrounded())
+        {
+            gravity = -100.0f;
+        }
     }
 
     bool IsGrounded()
     {
         // Check if the player is on the ground
-        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+        return Physics.Raycast(transform.position, Vector3.down, 1.3f);
     }
 
-    IEnumerator jumping()
+    IEnumerator jumping()  // Is called when player presses space whilst on the ground.
     {
-        gravity = 20.0f;
+        gravity = 40.0f;
+        isJumping = true;
         yield return new WaitForSeconds(1.0f);
-        gravity = -80.0f;
+        gravity = -100.0f;
+        isJumping = false;
     }
 
-    IEnumerator Knockback()
+    IEnumerator Knockback()  // Knocks the player backward and provides temporary invulnerability after they get hit.
     {
         knockback = true;
         iFrames = true;
@@ -128,12 +143,14 @@ public class playerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("BearAttack") && !iFrames)
         {
+
             health--;
+            healthText.text = "Health: " + health.ToString();
             if (health == 0)
             {
-                Destroy(gameObject);
+                SceneManager.LoadScene("DeathScreen");
             }
             StartCoroutine(Knockback());
         }
-    }
+    } 
 }
