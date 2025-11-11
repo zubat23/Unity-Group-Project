@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 public class playerMovement : MonoBehaviour
 {
@@ -147,7 +148,7 @@ public class playerMovement : MonoBehaviour
             healthText.text = "Health: " + health.ToString();
             if (health == 0)
             {
-                Destroy(gameObject);
+                SceneManager.LoadScene("DeathScreen");
             }
             StartCoroutine(Knockback());
         }
