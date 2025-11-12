@@ -12,11 +12,6 @@ public class CameraController : MonoBehaviour
     public Transform lookAt;
     public Transform Player;
 
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
     // Update is called once per frame
     void LateUpdate()
     {

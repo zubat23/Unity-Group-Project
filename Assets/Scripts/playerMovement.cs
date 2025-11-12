@@ -27,6 +27,7 @@ public class playerMovement : MonoBehaviour
     {
         Controller = GetComponent<CharacterController>(); // Initialize Controller
         PlayerAnimator = GetComponent<Animator>();//Initialize Animator
+        Cursor.lockState = CursorLockMode.Locked; // Lock cursor
     }
 
     void Update()
@@ -148,6 +149,7 @@ public class playerMovement : MonoBehaviour
             healthText.text = "Health: " + health.ToString();
             if (health == 0)
             {
+                Cursor.lockState = CursorLockMode.None;
                 SceneManager.LoadScene("DeathScreen");
             }
             StartCoroutine(Knockback());
